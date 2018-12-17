@@ -1,14 +1,40 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { listVendors } from '../reducers/vendors';
+import { View, Button, Text, FlatList, StyleSheet } from 'react-native';
+import {
+	listVendors, addVendor, updateVendor, deleteVendor
+} from '../reducers/vendors';
 
 
 class Vendor extends Component {
 
+  deleteItem (item ) {
+    console.log('delete', item)
+    this.props.deleteVendor(item.id);
+  }
+  editItem (item) {
+    console.log('edit', item)
+  }
+
   renderItem = ({ item }) => (
     <View style={styles.item}>
       <Text>{item.name}</Text>
+      <Button
+        onPress={() => {
+          this.editItem(item)
+        }}
+        title="Edit"
+        color="#0000FF"
+        accessibilityLabel="Edit"
+      />
+      <Button
+        onPress={() => {
+          this.deleteItem(item)
+        }}
+        title="Delete"
+        color="#FF0000"
+        accessibilityLabel="Delete"
+      />
     </View>
   );
   render() {
@@ -40,10 +66,20 @@ const mapStateToProps = state => {
   }
 }
 
+
 const mapDispatchToProps = dispatch => {
   return {
     listVendors: () => {
       dispatch(listVendors());
+    },
+    addVendor: (name) => {
+      dispatch(addVendor(text));
+    },
+    updateVendor: (id, name) => {
+      dispatch(addVendor(id, name));
+    },
+    deleteVendor: (id) => {
+      dispatch(deleteVendor(id));
     },
   }
 }
