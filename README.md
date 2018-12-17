@@ -1,8 +1,19 @@
 
 ## People on the move.
 
-- MobVend, React Native app folder
-- backend, Django python app folder
+
+## MobVend React Native App.
+
+#### Quickstart iOS
+
+```
+react-native run-ios
+```
+
+
+## backend, Django python app folder.
+
+#### Quickstart backend.
 
 
 Once you have docker compose, you can run the backendapp like this.
