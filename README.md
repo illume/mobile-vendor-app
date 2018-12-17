@@ -6,6 +6,22 @@
 
 #### Quickstart iOS
 
+Install all the dependencies with npm.
+
+```
+cd MobVend
+npm install
+```
+
+
+Install react native debugger.
+
+```
+brew update && brew cask install react-native-debugger
+```
+
+Run the app.
+
 ```
 react-native run-ios
 ```

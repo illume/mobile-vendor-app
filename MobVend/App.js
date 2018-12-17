@@ -11,7 +11,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
 import thunk from "redux-thunk";
 
@@ -20,7 +20,17 @@ import thunk from "redux-thunk";
 import Tabs from './components/Tabs';
 import mobVendApp from "./reducers";
 
-const store = createStore(mobVendApp, applyMiddleware(thunk))
+// Some config for https://github.com/zalmoxisus/redux-devtools-extension
+/* eslint-disable no-underscore-dangle */
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  mobVendApp,
+  /* preloadedState, */
+  composeEnhancers(applyMiddleware(thunk))
+);
+
+/* eslint-enable */
+
 
 export default class App extends Component {
   render() {
