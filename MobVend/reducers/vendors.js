@@ -1,39 +1,63 @@
 export const ADD_VENDOR = 'mob-vend/vendors/ADD_VENDOR';
 export const UPDATE_VENDOR = 'mob-vend/vendors/UPDATE_VENDOR';
+export const EDIT_VENDOR = 'mob-vend/vendors/EDIT_VENDOR';
 export const DELETE_VENDOR = 'mob-vend/vendors/DELETE_VENDOR';
 
 
-const initialState = [
-  {name: "Sam Vendorson", "key": "1"}
-];
+const initialState = {
+  vendors: [
+    {name: "Sam Vendorson", "key": "1"}
+  ],
+  editVendor: null,
+}
 
 
 export default function vendors(state=initialState, action) {
-  let vendorList = state.slice();
+  let vendorList = state.vendors.slice();
+  let result = {
+    vendors: vendorList,
+    editVendor: null,
+  }
+  let idx;
+
   switch (action.type) {
 
     case ADD_VENDOR:
-      return [...state, {name: action.name}];
-
+      result.vendors = [...state, {name: action.name, key: `${vendorList.length+2}`}]
+      return result
+    case EDIT_VENDOR:
+      result.editVendor = {name: action.name, key: action.id}
+      return result;
     case UPDATE_VENDOR:
-      let vendorToUpdate = vendorList[action.id]
-      vendorToUpdate.name = action.name;
-      vendorList.splice(action.id, 1, vendorToUpdate);
-      return vendorList;
+      idx = vendorList.findIndex(element => {
+        return element.key === action.id
+      })
+      if (idx != -1) {
+        vendorList[idx].name = action.name;
+        vendorList[idx].key = action.id;
+      }
+      result.vendors = vendorList;
+      return result;
 
     case DELETE_VENDOR:
-      vendorList.splice(action.id, 1);
-      return vendorList;
+      idx = vendorList.findIndex(element => {
+        return element.key === action.id
+      })
+      if (idx != -1) {
+        vendorList.splice(idx, 1);
+      }
+      result.vendors = vendorList;
+      return result;
 
     default:
       return state;
   }
 }
 
-export const addVendor = text => {
+export const addVendor = name => {
   return {
     type: ADD_VENDOR,
-    text
+    name
   }
 }
 
@@ -44,6 +68,15 @@ export const updateVendor = (id, name) => {
     name
   }
 }
+
+export const editVendor = (id, name) => {
+  return {
+    type: EDIT_VENDOR,
+    id,
+    name
+  }
+}
+
 
 export const deleteVendor = id => {
   return {
