@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { View, Button, Text, FlatList, StyleSheet } from 'react-native';
 import {
-	listVendors, addVendor, updateVendor, deleteVendor
+	listVendors, addVendor, updateVendor, deleteVendor, editVendor,
 } from '../reducers/vendors';
 
 
@@ -10,10 +10,12 @@ class Vendor extends Component {
 
   deleteItem (item ) {
     console.log('delete', item)
-    this.props.deleteVendor(item.id);
+    this.props.deleteVendor(item.key);
   }
   editItem (item) {
     console.log('edit', item)
+    this.props.editVendor(item.key, item.name);
+    this.props.navigation.navigate('VendorForm')
   }
 
   renderItem = ({ item }) => (
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    vendors: state.vendors,
+    vendors: state.vendors.vendors,
   }
 }
 
@@ -77,6 +79,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateVendor: (id, name) => {
       dispatch(addVendor(id, name));
+    },
+    editVendor: (id, name) => {
+      dispatch(editVendor(id, name));
     },
     deleteVendor: (id) => {
       dispatch(deleteVendor(id));
