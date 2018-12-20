@@ -7,7 +7,9 @@ services:
       - postgres_data:/var/lib/postgresql/data/
   web:
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: python3 backend/manage.py runserver 0.0.0.0:8000
+    environment:
+      - DATABASE_URL=postgres://postgres@db:5432/postgres
     volumes:
       - .:/code
     ports:

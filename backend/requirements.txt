@@ -9,6 +9,7 @@ django-rest-framework
 django-rest-knox
 django-webpack-loader
 djangorestframework
+django-environ
 idna
 optional-django
 psycopg2
